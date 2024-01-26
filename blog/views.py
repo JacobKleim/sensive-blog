@@ -21,7 +21,7 @@ def serialize_post_optimized(post):
 def serialize_tag(tag):
     return {
         'title': tag.title,
-        'posts_with_tag': len(Post.objects.filter(tags=tag)),
+        'posts_with_tag': tag.posts_count,
     }
 
 
@@ -62,8 +62,6 @@ def post_detail(request, slug):
             'published_at': comment.published_at,
             'author': comment.author.username,
         })
-
-    likes = post.likes.all()
 
     related_tags = post.tags.annotate(posts_count=Count('posts'))
 
